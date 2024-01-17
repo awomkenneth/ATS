@@ -8,6 +8,7 @@ import uuid
 import requests
 from PyPDF2 import PdfReader
 
+#An Instance of the Flask class
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,7 +17,8 @@ def index():
         input_url = request.form['article_url']
         audio_file_path = generate_audio(input_url)
         return render_template('index.html', audio_file_path=audio_file_path)
-
+    
+    #Returning the Render template to index.html
     return render_template('index.html', audio_file_path=None)
 
 def generate_audio(url):
@@ -29,7 +31,7 @@ def generate_audio(url):
         config = Config()
         config.browser_user_agent = user_agent
 
-
+        # The article is been requested and downloaded
         article = Article(url, config=config)
         article.download()
         article.parse()
